@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("48c33b1b-e6f3-4657-baf4-e1a27ff1dd6c")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ReactorTwinAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3526947b47b88502b8888323597c4fdfaf3a1abc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9fa413de3a28e7d3821dfe016f31f8e2d3dcf9b")]
 [assembly: System.Reflection.AssemblyProductAttribute("ReactorTwinAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ReactorTwinAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
