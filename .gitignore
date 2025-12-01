@@ -1,0 +1,50 @@
+## Ignore Visual Studio temporary files, build outputs and user-specific files
+# See https://github.com/dotnet/runtime/blob/main/.gitignore for reference
+
+# User-specific files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+**/bin/
+**/obj/
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# NuGet
+packages/
+*.nupkg
+
+# Dotnet publish
+publish/
+artifacts/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+
+# Database files
+*.db
+*.sqlite
+
+# Secrets and certificates
+*.pfx
+*.pem
+secrets.json
+
+# Temporary files
+*.userprefs
+*.tmp
+
+# Rider/IDE caches
+.idea/
+/.idea/
