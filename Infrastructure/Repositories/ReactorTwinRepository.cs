@@ -17,19 +17,39 @@ namespace ReactorTwinAPI.Infrastructure.Repositories
 
         public async Task<ReactorTwinDto> CreateAsync(CreateReactorTwinDto dto)
         {
-            var entity = new ReactorTwin
+            var reactor = new ReactorTwin
             {
                 Name = dto.Name,
                 Model = dto.Model,
-                Location = dto.Location ?? string.Empty,
+
+                SerialNumber = dto.SerialNumber,
+                Version = dto.Version,
+                Status = dto.Status,
+
+                ReactorType = dto.ReactorType,
+                ThermalOutputMW = dto.ThermalOutputMW,
+                ElectricalOutputMW = dto.ElectricalOutputMW,
+
+                FuelType = dto.FuelType,
+
+                CoreTemperature = dto.CoreTemperature,
+                PressureLevel = dto.PressureLevel,
+                CoolingSystemType = dto.CoolingSystemType,
+
+                CurrentTemperature = dto.CurrentTemperature,
+                CurrentPressure = dto.CurrentPressure,
+                CurrentPowerOutput = dto.CurrentPowerOutput,
+                RadiationLevel = dto.RadiationLevel,
+
                 CreatedAt = DateTime.UtcNow
             };
 
-            _db.ReactorTwins.Add(entity);
+            _db.ReactorTwins.Add(reactor);
             await _db.SaveChangesAsync();
 
-            return MapToDto(entity);
+            return MapToDto(reactor);
         }
+
 
         public async Task<bool> DeleteAsync(Guid id)
         {
@@ -54,26 +74,61 @@ namespace ReactorTwinAPI.Infrastructure.Repositories
 
         public async Task<bool> UpdateAsync(Guid id, UpdateReactorTwinDto dto)
         {
-            var e = await _db.ReactorTwins.FindAsync(id);
-            if (e == null) return false;
+            var reactor = await _db.ReactorTwins.FindAsync(id);
+            if (reactor == null)
+            {
+                return false;
+            }
 
-            if (!string.IsNullOrWhiteSpace(dto.Name)) e.Name = dto.Name;
-            if (!string.IsNullOrWhiteSpace(dto.Model)) e.Model = dto.Model;
-            if (dto.Location != null) e.Location = dto.Location;
-            e.UpdatedAt = DateTime.UtcNow;
+            reactor.Name = dto.Name;
+            reactor.Model = dto.Model;
+            reactor.SerialNumber = dto.SerialNumber;
+            reactor.Version = dto.Version;
+            reactor.Status = dto.Status;
+            reactor.ReactorType = dto.ReactorType;
+            reactor.ThermalOutputMW = dto.ThermalOutputMW;
+            reactor.ElectricalOutputMW = dto.ElectricalOutputMW;
+            reactor.FuelType = dto.FuelType;
+            reactor.CoreTemperature = dto.CoreTemperature;
+            reactor.PressureLevel = dto.PressureLevel;
+            reactor.CoolingSystemType = dto.CoolingSystemType;
+            reactor.CurrentTemperature = dto.CurrentTemperature;
+            reactor.CurrentPressure = dto.CurrentPressure;
+            reactor.CurrentPowerOutput = dto.CurrentPowerOutput;
+            reactor.RadiationLevel = dto.RadiationLevel;
+
+            reactor.UpdatedAt = DateTime.UtcNow;
 
             await _db.SaveChangesAsync();
+
             return true;
         }
 
-        private ReactorTwinDto MapToDto(ReactorTwin e) => new ReactorTwinDto
+
+        private ReactorTwinDto MapToDto(ReactorTwin reactor)
         {
-            Id = e.Id,
-            Name = e.Name,
-            Model = e.Model,
-            Location = e.Location,
-            CreatedAt = e.CreatedAt,
-            UpdatedAt = e.UpdatedAt
-        };
+            return new ReactorTwinDto
+            {
+                Id = reactor.Id,
+                Name = reactor.Name,
+                Model = reactor.Model,
+                SerialNumber = reactor.SerialNumber,
+                Version = reactor.Version,
+                Status = reactor.Status,
+                ReactorType = reactor.ReactorType,
+                ThermalOutputMW = reactor.ThermalOutputMW,
+                ElectricalOutputMW = reactor.ElectricalOutputMW,
+                FuelType = reactor.FuelType,
+                CoreTemperature = reactor.CoreTemperature,
+                PressureLevel = reactor.PressureLevel,
+                CoolingSystemType = reactor.CoolingSystemType,
+                CurrentTemperature = reactor.CurrentTemperature,
+                CurrentPressure = reactor.CurrentPressure,
+                CurrentPowerOutput = reactor.CurrentPowerOutput,
+                RadiationLevel = reactor.RadiationLevel,
+                CreatedAt = reactor.CreatedAt,
+                UpdatedAt = reactor.UpdatedAt
+            };
+        }
     }
 }
