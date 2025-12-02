@@ -8,24 +8,24 @@ namespace ReactorTwinAPI.Controllers
     [Route("api/[controller]")]
     public class ReactorTwinsController : ControllerBase
     {
-        private readonly IReactorTwinService _service;
+        private readonly IReactorTwinRepository _repository;
 
-        public ReactorTwinsController(IReactorTwinService service)
+        public ReactorTwinsController(IReactorTwinRepository repository)
         {
-            _service = service;
+            _repository = repository;
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateReactorTwinDto dto)
         {
-            var created = await _service.CreateAsync(dto);
+            var created = await _repository.CreateAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var res = await _service.GetByIdAsync(id);
+            var res = await _repository.GetByIdAsync(id);
             if (res == null) return NotFound();
             return Ok(res);
         }
@@ -33,14 +33,14 @@ namespace ReactorTwinAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var res = await _service.GetAllAsync();
+            var res = await _repository.GetAllAsync();
             return Ok(res);
         }
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateReactorTwinDto dto)
         {
-            var ok = await _service.UpdateAsync(id, dto);
+            var ok = await _repository.UpdateAsync(id, dto);
             if (!ok) return NotFound();
             return NoContent();
         }
@@ -48,7 +48,7 @@ namespace ReactorTwinAPI.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var ok = await _service.DeleteAsync(id);
+            var ok = await _repository.DeleteAsync(id);
             if (!ok) return NotFound();
             return NoContent();
         }

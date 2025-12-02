@@ -6,11 +6,11 @@ using ReactorTwinAPI.Infrastructure.Persistence;
 
 namespace ReactorTwinAPI.Infrastructure.Repositories
 {
-    public class ReactorTwinService : IReactorTwinService
+    public class ReactorTwinRepository : IReactorTwinRepository
     {
         private readonly AppDbContext _db;
 
-        public ReactorTwinService(AppDbContext db)
+        public ReactorTwinRepository(AppDbContext db)
         {
             _db = db;
         }

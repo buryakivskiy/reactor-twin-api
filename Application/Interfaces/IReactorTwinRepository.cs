@@ -2,7 +2,7 @@ using ReactorTwinAPI.Application.DTOs;
 
 namespace ReactorTwinAPI.Application.Interfaces
 {
-    public interface IReactorTwinService
+    public interface IReactorTwinRepository
     {
         Task<ReactorTwinDto> CreateAsync(CreateReactorTwinDto dto);
         Task<ReactorTwinDto?> GetByIdAsync(Guid id);

@@ -14,7 +14,7 @@ namespace ReactorTwinAPI.Infrastructure.DependencyInjection
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IReactorTwinService, ReactorTwinService>();
+            services.AddScoped<IReactorTwinRepository, ReactorTwinRepository>();
 
             return services;
         }
