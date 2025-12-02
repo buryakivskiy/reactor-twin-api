@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReactorTwinAPI.Application.Interfaces;
+using ReactorTwinAPI.Application.Services;
 using ReactorTwinAPI.Infrastructure.Persistence;
 using ReactorTwinAPI.Infrastructure.Repositories;
 
@@ -15,6 +16,7 @@ namespace ReactorTwinAPI.Infrastructure.DependencyInjection
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IReactorTwinRepository, ReactorTwinRepository>();
+            services.AddScoped<IReactorTwinService, ReactorTwinService>();
 
             return services;
         }
