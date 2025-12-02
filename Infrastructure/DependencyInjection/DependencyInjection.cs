@@ -1,10 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using ReactorTwinAPI.Application.Interfaces;
-using ReactorTwinAPI.Application.Services;
 using ReactorTwinAPI.Infrastructure.Persistence;
-using ReactorTwinAPI.Infrastructure.Repositories;
+using ReactorTwinAPI.Features.ReactorTwins.Repositories;
+using ReactorTwinAPI.Features.ReactorTwins.Services;
 
 namespace ReactorTwinAPI.Infrastructure.DependencyInjection
 {

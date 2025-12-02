@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using ReactorTwinAPI.Application.DTOs;
-using ReactorTwinAPI.Application.Interfaces;
 using ReactorTwinAPI.Domain.Entities;
+using ReactorTwinAPI.Features.ReactorTwins.Dtos;
 using ReactorTwinAPI.Infrastructure.Persistence;
 
-namespace ReactorTwinAPI.Infrastructure.Repositories
+namespace ReactorTwinAPI.Features.ReactorTwins.Repositories
 {
     public class ReactorTwinRepository : IReactorTwinRepository
     {
@@ -49,7 +48,6 @@ namespace ReactorTwinAPI.Infrastructure.Repositories
 
             return MapToDto(reactor);
         }
-
 
         public async Task<bool> DeleteAsync(Guid id)
         {

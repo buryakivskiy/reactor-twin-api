@@ -1,7 +1,8 @@
-namespace ReactorTwinAPI.Application.DTOs
+namespace ReactorTwinAPI.Features.ReactorTwins.Dtos
 {
-    public class UpdateReactorTwinDto
+    public class ReactorTwinDto
     {
+        public Guid Id { get; set; }
         public string Name { get; set; } = null!;
         public string Model { get; set; } = null!;
         public string SerialNumber { get; set; } = null!;
@@ -18,5 +19,7 @@ namespace ReactorTwinAPI.Application.DTOs
         public double CurrentPressure { get; set; }
         public double CurrentPowerOutput { get; set; }
         public double RadiationLevel { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

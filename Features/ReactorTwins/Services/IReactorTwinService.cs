@@ -1,8 +1,8 @@
-using ReactorTwinAPI.Application.DTOs;
+using ReactorTwinAPI.Features.ReactorTwins.Dtos;
 
-namespace ReactorTwinAPI.Application.Interfaces
+namespace ReactorTwinAPI.Features.ReactorTwins.Services
 {
-    public interface IReactorTwinRepository
+    public interface IReactorTwinService
     {
         Task<ReactorTwinDto> CreateAsync(CreateReactorTwinDto dto);
         Task<ReactorTwinDto?> GetByIdAsync(Guid id);

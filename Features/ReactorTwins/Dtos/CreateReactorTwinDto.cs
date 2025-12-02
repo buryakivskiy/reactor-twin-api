@@ -1,4 +1,4 @@
-namespace ReactorTwinAPI.Application.DTOs
+namespace ReactorTwinAPI.Features.ReactorTwins.Dtos
 {
     public class CreateReactorTwinDto
     {

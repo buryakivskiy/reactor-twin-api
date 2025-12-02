@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using ReactorTwinAPI.Application.DTOs;
-using ReactorTwinAPI.Application.Interfaces;
+using ReactorTwinAPI.Features.ReactorTwins.Dtos;
+using ReactorTwinAPI.Features.ReactorTwins.Services;
 
-namespace ReactorTwinAPI.Controllers
+namespace ReactorTwinAPI.Features.ReactorTwins.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

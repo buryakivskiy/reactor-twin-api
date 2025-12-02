@@ -1,7 +1,7 @@
-using ReactorTwinAPI.Application.DTOs;
-using ReactorTwinAPI.Application.Interfaces;
+using ReactorTwinAPI.Features.ReactorTwins.Dtos;
+using ReactorTwinAPI.Features.ReactorTwins.Repositories;
 
-namespace ReactorTwinAPI.Application.Services
+namespace ReactorTwinAPI.Features.ReactorTwins.Services
 {
     public class ReactorTwinService : IReactorTwinService
     {
