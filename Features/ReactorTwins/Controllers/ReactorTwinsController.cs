@@ -20,8 +20,15 @@ namespace ReactorTwinAPI.Features.ReactorTwins.Controllers
         [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateReactorTwinDto dto)
         {
-            var created = await _service.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            try
+            {
+                var created = await _service.CreateAsync(dto);
+                return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
         }
 
         [HttpGet("{id:guid}")]
@@ -43,18 +50,32 @@ namespace ReactorTwinAPI.Features.ReactorTwins.Controllers
         [Authorize]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateReactorTwinDto dto)
         {
-            var ok = await _service.UpdateAsync(id, dto);
-            if (!ok) return NotFound();
-            return NoContent();
+            try
+            {
+                var ok = await _service.UpdateAsync(id, dto);
+                if (!ok) return NotFound();
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
         }
 
         [HttpDelete("{id:guid}")]
         [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var ok = await _service.DeleteAsync(id);
-            if (!ok) return NotFound();
-            return NoContent();
+            try
+            {
+                var ok = await _service.DeleteAsync(id);
+                if (!ok) return NotFound();
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
         }
     }
 }
