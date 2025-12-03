@@ -14,6 +14,7 @@ namespace ReactorTwinAPI.Infrastructure.DependencyInjection
 
             services.AddScoped<IReactorTwinRepository, ReactorTwinRepository>();
             services.AddScoped<IReactorTwinService, ReactorTwinService>();
+            services.AddAutoMapper(typeof(Features.ReactorTwins.Mapping.ReactorTwinProfile).Assembly);
 
             return services;
         }
