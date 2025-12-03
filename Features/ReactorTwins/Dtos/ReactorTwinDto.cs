@@ -21,5 +21,6 @@ namespace ReactorTwinAPI.Features.ReactorTwins.Dtos
         public double RadiationLevel { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public Guid OwnerId { get; set; }
     }
 }

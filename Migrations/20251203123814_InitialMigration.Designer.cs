@@ -12,8 +12,8 @@ using ReactorTwinAPI.Infrastructure.Persistence;
 namespace ReactorTwinAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251201215139_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251203123814_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,6 +69,9 @@ namespace ReactorTwinAPI.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
+
                     b.Property<double>("PressureLevel")
                         .HasColumnType("double precision");
 
@@ -103,7 +106,59 @@ namespace ReactorTwinAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OwnerId");
+
                     b.ToTable("ReactorTwins");
+                });
+
+            modelBuilder.Entity("ReactorTwinAPI.Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("CanCreateReactor")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<bool>("IsSuperUser")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("ReactorTwinAPI.Domain.Entities.ReactorTwin", b =>
+                {
+                    b.HasOne("ReactorTwinAPI.Domain.Entities.User", "Owner")
+                        .WithMany("ReactorTwins")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("ReactorTwinAPI.Domain.Entities.User", b =>
+                {
+                    b.Navigation("ReactorTwins");
                 });
 #pragma warning restore 612, 618
         }

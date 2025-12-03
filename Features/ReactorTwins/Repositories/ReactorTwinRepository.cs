@@ -16,10 +16,11 @@ namespace ReactorTwinAPI.Features.ReactorTwins.Repositories
             _mapper = mapper;
         }
 
-        public async Task<ReactorTwinDto> CreateAsync(CreateReactorTwinDto dto)
+        public async Task<ReactorTwinDto> CreateAsync(CreateReactorTwinDto dto, Guid ownerId)
         {
             var reactor = _mapper.Map<ReactorTwin>(dto);
             reactor.CreatedAt = DateTime.UtcNow;
+            reactor.OwnerId = ownerId;
 
             _db.ReactorTwins.Add(reactor);
             await _db.SaveChangesAsync();

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReactorTwinAPI.Features.ReactorTwins.Dtos;
 using ReactorTwinAPI.Features.ReactorTwins.Services;
@@ -16,6 +17,7 @@ namespace ReactorTwinAPI.Features.ReactorTwins.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateReactorTwinDto dto)
         {
             var created = await _service.CreateAsync(dto);
@@ -38,6 +40,7 @@ namespace ReactorTwinAPI.Features.ReactorTwins.Controllers
         }
 
         [HttpPut("{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateReactorTwinDto dto)
         {
             var ok = await _service.UpdateAsync(id, dto);
@@ -46,6 +49,7 @@ namespace ReactorTwinAPI.Features.ReactorTwins.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             var ok = await _service.DeleteAsync(id);

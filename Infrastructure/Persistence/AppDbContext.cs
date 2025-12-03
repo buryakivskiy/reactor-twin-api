@@ -6,6 +6,7 @@ namespace ReactorTwinAPI.Infrastructure.Persistence
     public class AppDbContext : DbContext
     {
         public DbSet<ReactorTwin> ReactorTwins => Set<ReactorTwin>();
+        public DbSet<User> Users => Set<User>();
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 

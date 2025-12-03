@@ -21,5 +21,7 @@ namespace ReactorTwinAPI.Domain.Entities
         public double RadiationLevel { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
+        public Guid OwnerId { get; set; }
+        public ReactorTwinAPI.Domain.Entities.User? Owner { get; set; }
     }
 }

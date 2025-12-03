@@ -28,6 +28,11 @@ namespace ReactorTwinAPI.Infrastructure.Persistence.Configurations
             b.Property(x => x.CurrentPressure);
             b.Property(x => x.CurrentPowerOutput);
             b.Property(x => x.RadiationLevel);
+            b.Property(x => x.OwnerId).IsRequired();
+            b.HasOne(r => r.Owner)
+                .WithMany(u => u.ReactorTwins)
+                .HasForeignKey(r => r.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

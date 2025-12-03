@@ -9,7 +9,10 @@ namespace ReactorTwinAPI.Features.ReactorTwins.Mapping
         public ReactorTwinProfile()
         {
             CreateMap<CreateReactorTwinDto, ReactorTwin>();
-            CreateMap<UpdateReactorTwinDto, ReactorTwin>();
+            CreateMap<UpdateReactorTwinDto, ReactorTwin>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.OwnerId, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
             CreateMap<ReactorTwin, ReactorTwinDto>();
         }
     }
