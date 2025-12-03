@@ -1,35 +1,33 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using ReactorTwinAPI.Features.Auth.Dtos;
 using ReactorTwinAPI.Features.Users.Dtos;
 using ReactorTwinAPI.Features.Users.Repositories;
 
-namespace ReactorTwinAPI.Features.Users.Controllers
+namespace ReactorTwinAPI.Features.Auth.Services
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepo;
         private readonly IConfiguration _configuration;
 
-        public AuthController(IUserRepository userRepo, IConfiguration configuration)
+        public AuthService(IUserRepository userRepo, IConfiguration configuration)
         {
             _userRepo = userRepo;
             _configuration = configuration;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest req)
+        public async Task<UserDto> RegisterAsync(RegisterDto req)
         {
             var any = await _userRepo.AnyUsersAsync();
+
             if (string.IsNullOrWhiteSpace(req.Username) || string.IsNullOrWhiteSpace(req.Password))
-                return BadRequest("Username and password are required");
+                throw new ArgumentException("Username and password are required");
 
             var exists = await _userRepo.GetByUsernameAsync(req.Username);
-            if (exists != null) return Conflict("Username already exists");
+            if (exists != null) throw new InvalidOperationException("Username already exists");
 
             var dto = new CreateUserDto { Username = req.Username };
             if (!any && req.RequestSuper)
@@ -39,22 +37,20 @@ namespace ReactorTwinAPI.Features.Users.Controllers
 
             var hash = BCrypt.Net.BCrypt.HashPassword(req.Password);
             var created = await _userRepo.CreateAsync(dto, hash);
-            return Ok(created);
+            return created;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest req)
+        public async Task<string?> LoginAsync(LoginDto req)
         {
             if (string.IsNullOrWhiteSpace(req.Username) || string.IsNullOrWhiteSpace(req.Password))
-                return BadRequest("Username and password are required");
+                throw new ArgumentException("Username and password are required");
 
             var userEntity = await _userRepo.GetEntityByUsernameAsync(req.Username);
-            if (userEntity == null) return Unauthorized();
+            if (userEntity == null) return null;
 
-            if (!BCrypt.Net.BCrypt.Verify(req.Password, userEntity.PasswordHash)) return Unauthorized();
+            if (!BCrypt.Net.BCrypt.Verify(req.Password, userEntity.PasswordHash)) return null;
 
-            var token = GenerateToken(userEntity.Id, userEntity.Username, userEntity.IsSuperUser, userEntity.CanCreateReactor);
-            return Ok(new { token });
+            return GenerateToken(userEntity.Id, userEntity.Username, userEntity.IsSuperUser, userEntity.CanCreateReactor);
         }
 
         private string GenerateToken(Guid userId, string username, bool isSuper, bool canCreate)

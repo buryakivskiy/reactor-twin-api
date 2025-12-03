@@ -1,6 +1,6 @@
-namespace ReactorTwinAPI.Features.Users.Dtos
+namespace ReactorTwinAPI.Features.Auth.Dtos
 {
-    public class RegisterRequest
+    public class RegisterDto
     {
         public string Username { get; set; } = null!;
         public string Password { get; set; } = null!;

@@ -32,9 +32,9 @@ namespace ReactorTwinAPI.Infrastructure.Persistence.Configurations
                 .HasDefaultValue(true);
 
             builder.HasMany(u => u.ReactorTwins)
-                   .WithOne(rt => rt.Owner)
-                   .HasForeignKey(rt => rt.OwnerId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                .WithOne(rt => rt.Owner)
+                .HasForeignKey(rt => rt.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

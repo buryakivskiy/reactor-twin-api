@@ -6,30 +6,55 @@ namespace ReactorTwinAPI.Infrastructure.Persistence.Configurations
 {
     public class ReactorTwinConfiguration : IEntityTypeConfiguration<ReactorTwin>
     {
-        public void Configure(EntityTypeBuilder<ReactorTwin> b)
+        public void Configure(EntityTypeBuilder<ReactorTwin> builder)
         {
-            b.HasKey(x => x.Id);
+            builder.HasKey(x => x.Id);
 
-            b.Property(x => x.Name).IsRequired().HasMaxLength(200);
-            b.Property(x => x.Model).IsRequired().HasMaxLength(200);
+            builder.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(200);
 
-            b.Property(x => x.SerialNumber).IsRequired().HasMaxLength(100);
-            b.Property(x => x.Version).IsRequired().HasMaxLength(50);
-            b.Property(x => x.Status).IsRequired().HasMaxLength(50);
-            b.Property(x => x.ReactorType).IsRequired().HasMaxLength(100);
-            b.Property(x => x.FuelType).IsRequired().HasMaxLength(100);
-            b.Property(x => x.CoolingSystemType).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Model)
+                .IsRequired()
+                .HasMaxLength(200);
 
-            b.Property(x => x.ThermalOutputMW);
-            b.Property(x => x.ElectricalOutputMW);
-            b.Property(x => x.CoreTemperature);
-            b.Property(x => x.PressureLevel);
-            b.Property(x => x.CurrentTemperature);
-            b.Property(x => x.CurrentPressure);
-            b.Property(x => x.CurrentPowerOutput);
-            b.Property(x => x.RadiationLevel);
-            b.Property(x => x.OwnerId).IsRequired();
-            b.HasOne(r => r.Owner)
+            builder.Property(x => x.SerialNumber)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(x => x.Version)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(x => x.Status)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(x => x.ReactorType)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(x => x.FuelType)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(x => x.CoolingSystemType)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(x => x.ThermalOutputMW);
+            builder.Property(x => x.ElectricalOutputMW);
+            builder.Property(x => x.CoreTemperature);
+            builder.Property(x => x.PressureLevel);
+            builder.Property(x => x.CurrentTemperature);
+            builder.Property(x => x.CurrentPressure);
+            builder.Property(x => x.CurrentPowerOutput);
+            builder.Property(x => x.RadiationLevel);
+
+            builder.Property(x => x.OwnerId)
+                .IsRequired();
+
+            builder.HasOne(r => r.Owner)
                 .WithMany(u => u.ReactorTwins)
                 .HasForeignKey(r => r.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);

@@ -1,19 +1,19 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReactorTwinAPI.Application.Services;
-using ReactorTwinAPI.Features.Users.Dtos;
+using ReactorTwinAPI.Features.Admin.Dtos;
 using ReactorTwinAPI.Features.Users.Repositories;
 
-namespace ReactorTwinAPI.Features.Users.Controllers
+namespace ReactorTwinAPI.Features.Admin.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class AdminController : ControllerBase
     {
         private readonly IUserRepository _userRepo;
         private readonly ICurrentUserService _currentUser;
 
-        public UsersController(IUserRepository userRepo, ICurrentUserService currentUser)
+        public AdminController(IUserRepository userRepo, ICurrentUserService currentUser)
         {
             _userRepo = userRepo;
             _currentUser = currentUser;
@@ -23,20 +23,16 @@ namespace ReactorTwinAPI.Features.Users.Controllers
         [Authorize]
         public async Task<IActionResult> GetById(Guid id)
         {
+            if (!_currentUser.IsSuperUser) return Forbid();
+            
             var user = await _userRepo.GetByIdAsync(id);
             if (user == null) return NotFound();
             return Ok(user);
         }
 
-        public class UpdatePermissionsRequest
-        {
-            public bool? CanCreate { get; set; }
-            public bool? IsSuper { get; set; }
-        }
-
         [HttpPatch("{id}/permissions")]
         [Authorize]
-        public async Task<IActionResult> UpdatePermissions(Guid id, [FromBody] UpdatePermissionsRequest req)
+        public async Task<IActionResult> UpdatePermissions(Guid id, [FromBody] UpdatePermissionsDto req)
         {
             if (!_currentUser.IsSuperUser) return Forbid();
 

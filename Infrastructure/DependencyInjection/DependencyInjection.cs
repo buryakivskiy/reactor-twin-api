@@ -21,6 +21,7 @@ namespace ReactorTwinAPI.Infrastructure.DependencyInjection
             services.AddScoped<IReactorTwinRepository, ReactorTwinRepository>();
             services.AddScoped<IReactorTwinService, ReactorTwinService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<Features.Auth.Services.IAuthService, Features.Auth.Services.AuthService>();
 
             // AutoMapper (scan profiles in ReactorTwins and Users)
             services.AddAutoMapper(typeof(Features.ReactorTwins.Mapping.ReactorTwinProfile).Assembly,
