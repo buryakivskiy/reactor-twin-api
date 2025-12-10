@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ReactorTwinAPI.Features.ReactorTwins.Dtos;
 using ReactorTwinAPI.Features.ReactorTwins.Services;
 

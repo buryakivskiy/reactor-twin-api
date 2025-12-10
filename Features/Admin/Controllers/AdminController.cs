@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ReactorTwinAPI.Application.Services;
 using ReactorTwinAPI.Features.Admin.Dtos;
 using ReactorTwinAPI.Features.Users.Repositories;
@@ -24,7 +25,7 @@ namespace ReactorTwinAPI.Features.Admin.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             if (!_currentUser.IsSuperUser) return Forbid();
-            
+
             var user = await _userRepo.GetByIdAsync(id);
             if (user == null) return NotFound();
             return Ok(user);

@@ -17,34 +17,16 @@ namespace ReactorTwinAPI.Features.Auth.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto req)
         {
-            try
-            {
-                var created = await _authService.RegisterAsync(req);
-                return Ok(created);
-            }
-            catch (ArgumentException ae)
-            {
-                return BadRequest(ae.Message);
-            }
-            catch (InvalidOperationException ie)
-            {
-                return Conflict(ie.Message);
-            }
+            var created = await _authService.RegisterAsync(req);
+            return Ok(created);
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto req)
         {
-            try
-            {
-                var token = await _authService.LoginAsync(req);
-                if (token == null) return Unauthorized();
-                return Ok(new { token });
-            }
-            catch (ArgumentException ae)
-            {
-                return BadRequest(ae.Message);
-            }
+            var token = await _authService.LoginAsync(req);
+            if (token == null) return Unauthorized();
+            return Ok(new { token });
         }
     }
 }
